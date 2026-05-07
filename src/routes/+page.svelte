@@ -1,8 +1,7 @@
 <script>
-	import Decoder from "$lib/components/pages/decoder.svelte";
+	import Alphcode from "$lib/components/pages/alphcode.svelte";
 
 
 </script>
 
-
-<Decoder />
+<Alphcode />

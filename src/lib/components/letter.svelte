@@ -7,7 +7,7 @@
 
 {#if active}
 	<!-- slot with "underlines" -->
-	<div class="rounded-lg border-2 border-black bg-white p-4 text-center">
+	<div class="rounded-lg border-2 border-black bg-white p-4 text-center cursor-pointer">
 		<!-- actual letters -->
 		<span class="m-2 border-b-2 border-black p-1 text-lg">
 			{#if letter != '_'}
@@ -19,7 +19,7 @@
 	</div>
 {:else}
 	<!-- slot with "underlines" -->
-	<div class="rounded-lg border border-gray-300 bg-white p-4 text-center" onclick={() => {activeLetter = index;}}>
+	<div class="rounded-lg border border-gray-300 bg-white p-4 text-center cursor-pointer" onclick={() => {activeLetter = index;}}>
 		<!-- actual letters -->
 		<span class="m-2 border-b-2 border-black p-1 text-lg">
 			{#if letter != '_'}
