@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { ALPHABET } from '$lib/util/alphabet';
-
 	let { letter = $bindable(), activeLetter = $bindable(), index } = $props();
 
 	const active = $derived(activeLetter === index);
