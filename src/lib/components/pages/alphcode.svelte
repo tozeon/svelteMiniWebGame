@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Letter from '$lib/components/letter.svelte';
+	import { ALPHABET } from '$lib/util/alphabet';
 
 	const word = 'tiger';
 
@@ -9,9 +10,8 @@
 
 	// temp list
 	const codes: Array<{ index: number; value: string }> = [];
-	const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
-	alphabet.split('').forEach((letter, index) => {
+	ALPHABET.split('').forEach((letter, index) => {
 		codes.push({ index: index + 1, value: letter });
 	});
 
@@ -28,9 +28,51 @@
 		}
 		console.log(code);
 	});
+
+	const onKeydown = (e: KeyboardEvent) => {
+		if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+		const current = activeLetter;
+
+		if (ALPHABET.includes(e.key)) {
+			userInput[current].value = e.key;
+			activeLetter = Math.min(current + 1, word.length - 1);
+		} else {
+			switch (e.key) {
+				case 'Backspace':
+					if (userInput[current].value !== '_') {
+						userInput[current].value = '_';
+						activeLetter = Math.max(current - 1, 0);
+					} else {
+						activeLetter = Math.max(current - 1, 0);
+					}
+
+					break;
+				case 'Enter':
+					activeLetter = Math.min(current + 1, word.length - 1);
+					break;
+				case 'Tab':
+					e.preventDefault();
+					if (e.shiftKey) {
+						activeLetter = Math.max(0, current - 1);
+					} else {
+						activeLetter = Math.min(activeLetter, current + 1);
+					}
+					break;
+			}
+		}
+	};
 </script>
 
-<div class="flex h-screen w-screen items-center justify-center bg-blue-200">
+<div
+	class="flex h-screen w-screen items-center justify-center bg-blue-200"
+	role="menu"
+	onkeydown={onKeydown}
+	tabindex="-1"
+	onclick={() => {
+		console.log('clicked');
+	}}
+>
 	<aside class="mr-16 ml-8 flex flex-1 flex-col border">
 		<div class="w-full flex-col p-16">
 			<h1>Codes</h1>
@@ -48,12 +90,7 @@
 					<div class="flex flex-col items-center justify-center gap-3">
 						<!-- show the encrypted word -->
 						<span>{encryptedWord[letter.index]}</span>
-						<Letter
-							bind:letter={letter.value}
-							bind:activeLetter
-							index={letter.index}
-							wordSize={word.length}
-						/>
+						<Letter letter={letter.value} {activeLetter} index={letter.index} />
 					</div>
 				{/each}
 			</div>
