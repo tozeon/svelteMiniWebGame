@@ -53,11 +53,6 @@
 					break;
 				case 'Tab':
 					e.preventDefault();
-					if (e.shiftKey) {
-						activeLetter = Math.max(0, current - 1);
-					} else {
-						activeLetter = Math.min(activeLetter, current + 1);
-					}
 					break;
 			}
 		}
