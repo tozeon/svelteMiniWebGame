@@ -57,6 +57,11 @@
 			}
 		}
 	};
+
+	const validateWord = () => {
+		const userWord = userInput.map((letter) => letter.value).join('');
+		return userWord === word;
+	};
 </script>
 
 <div
@@ -65,7 +70,7 @@
 	onkeydown={onKeydown}
 	tabindex="-1"
 	onclick={() => {
-		console.log('clicked');
+		console.log('');
 	}}
 >
 	<aside class="mr-16 ml-8 flex flex-1 flex-col border">
@@ -92,6 +97,13 @@
 		</div>
 		<button
 			class="cursor-pointer rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+			onclick={() => {
+				if (validateWord()) {
+					console.log('Correct!');
+				} else {
+					console.log('Incorrect.');
+				}
+			}}
 		>
 			submit
 		</button>
